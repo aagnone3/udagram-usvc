@@ -15,6 +15,7 @@ before_script:
 
 script:
   - docker --version # print the version for logging
+  - cd udacity-c3-deployment
   - make image docker_tag
   # - docker build -t simple-reverse-proxy .
   # - docker tag simple-reverse-proxy aagnone/simple-reverse-proxy:latest
