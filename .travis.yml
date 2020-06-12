@@ -15,11 +15,11 @@ before_script:
 
 script:
   - docker --version # print the version for logging
-  - cd udacity-c3-deployment
+  - cd udacity-c3-deployment/docker
   - docker-compose -f docker-compose-build.yaml build --parallel
 
 after_success:
-  - cd udacity-c3-deployment
+  - cd udacity-c3-deployment/docker
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   - docker-compose -f docker-compose-build.yaml push
 
