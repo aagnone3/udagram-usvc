@@ -1,0 +1,34 @@
+# variables
+AWS_ACCOUNT_ID ?= 528600220408
+AWS_REGION ?= us-east-1
+AWS_CMD ?= aws
+DOCKER_CMD ?= docker
+
+# derived variables
+DOCKER_URI := $(DOCKER_USER)/$(IMAGE_NAME)
+ECR_BASE := $(AWS_ACCOUNT_ID).dkr.ecr.$(AWS_REGION).amazonaws.com
+ECR_URI := $(ECR_BASE)/$(IMAGE_NAME)
+
+ecr_create_repo:
+	$(AWS_CMD) ecr create-repository --repository-name $(IMAGE_NAME) > etc/repository.json
+
+ecr_login:
+	$(AWS_CMD) ecr get-login-password --region $(AWS_REGION) \
+		| $(DOCKER_CMD) login \
+			--username AWS \
+			--password-stdin $(ECR_BASE)
+
+ecr_tag:
+	$(DOCKER_CMD) tag $(IMAGE_NAME) $(ECR_URI) 
+
+ecr_push: ecr_login ecr_tag
+	$(DOCKER_CMD) push $(ECR_URI)
+
+docker_login:
+	echo $(DOCKER_PW) | $(DOCKER_CMD) login -u $(DOCKER_USER) --password-stdin
+
+docker_tag:
+	$(DOCKER_CMD) tag $(IMAGE_NAME) $(DOCKER_URI) 
+
+docker_push: docker_login
+	$(DOCKER_CMD) push $(DOCKER_URI)
