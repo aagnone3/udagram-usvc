@@ -3,15 +3,15 @@ services:
   reverseproxy:
     build:
       context: .
-    image: aagnone/reverseproxy 
+    image: aagnone/reverseproxy:latest
   backend_user:
     build:
       context: ../../udacity-c3-restapi-user
-    image: aagnone/udacity-restapi-user
+    image: aagnone/udacity-restapi-user:latest
   backend_feed:
     build:
       context: ../../udacity-c3-restapi-feed  
-    image: aagnone/udacity-restapi-feed
+    image: aagnone/udacity-restapi-feed:latest
   frontend:
     build:
       context: ../../udacity-c3-frontend  
