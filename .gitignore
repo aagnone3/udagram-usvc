@@ -6,10 +6,10 @@
 # -----------------------
 # added by @aagnone3
 *.terraform
-*kubeconfig
 *.tfstate
 *terraform_plan*
 *tf.json
+*aws-secret.yaml
 
 # User-specific files
 *.rsuser
