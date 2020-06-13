@@ -3,6 +3,14 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+# -----------------------
+# added by @aagnone3
+*.terraform
+*kubeconfig
+*.tfstate
+*terraform_plan*
+*tf.json
+
 # User-specific files
 *.rsuser
 *.suo
