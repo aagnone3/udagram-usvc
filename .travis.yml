@@ -6,9 +6,17 @@ services:
   - docker
 
 install:
-  - echo "Installing stable version of kubernetes"
+  # install kubectl
+  - echo "Installing stable version of kubectl
   - curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
-
+  - chmod 755 kubectl
+  - sudo mv kubectl /usr/local/bin/
+  # set up k8s config
+  - mkdir ~/.kube
+  - cp ./udacity-c3-deployment/k8s/udagram-kubeconfig ~/.kube/config
+  - kubectl config set clusters.udagram.certificate-authority-data "$K8S_CLUSTER_CERT"
+  - kubectl config set users.kubernetes-admin.client-certificate-data "$K8S_ADMIN_CLIENT_CERT
+  - kubectl config set users.kubernetes-admin.client-key-data "$K8S_ADMIN_CLIENT_KEY"
 
 before_script:
   - echo "no tests"
