@@ -5,21 +5,27 @@ node_js:
 services:
   - docker
 
-# Pre-testing installs
 install:
-  - echo "nothing needs to be installed"
+  - echo "Installing stable version of kubernetes"
+  - curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
 
-# Scripts to be run such as tests
+
 before_script:
   - echo "no tests"
 
 script:
-  - docker --version # print the version for logging
-  - cd udacity-c3-deployment/docker
-  - docker-compose -f docker-compose-build.yaml build --parallel
+  - docker --version
+  - kubectl version
+  # - cd udacity-c3-deployment/docker
+  # - docker-compose -f docker-compose-build.yaml build --parallel
 
 after_success:
-  - cd udacity-c3-deployment/docker
+  # push the built Docker images to their repositories
+  - pushd udacity-c3-deployment/docker
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   - docker-compose -f docker-compose-build.yaml push
-
+  - popd
+  # deploy application to the running cluster
+  - pushd udacity-c3-deployment/terraform
+  - make deploy_services
+  - popd
