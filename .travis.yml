@@ -14,7 +14,7 @@ install:
   # set up k8s config
   - echo "Setting up k8s config"
   - mkdir ~/.kube
-  - cp ./udacity-c3-deployment/k8s/udagram-kubeconfig ~/.kube/config
+  - cp ./udacity-c3-deployment/terraform/udagram-aagnone-kubeconfig ~/.kube/config
   - kubectl config set clusters.udagram.certificate-authority-data "$K8S_CLUSTER_CERT"
   - kubectl config set users.kubernetes-admin.client-certificate-data "$K8S_ADMIN_CLIENT_CERT"
   - kubectl config set users.kubernetes-admin.client-key-data "$K8S_ADMIN_CLIENT_KEY"
