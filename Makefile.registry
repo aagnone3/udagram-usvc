@@ -5,7 +5,7 @@ AWS_CMD ?= aws
 DOCKER_CMD ?= docker
 
 # derived variables
-DOCKER_URI := $(DOCKER_USER)/$(IMAGE_NAME)
+DOCKER_URI := $(DOCKER_USERNAME)/$(IMAGE_NAME)
 ECR_BASE := $(AWS_ACCOUNT_ID).dkr.ecr.$(AWS_REGION).amazonaws.com
 ECR_URI := $(ECR_BASE)/$(IMAGE_NAME)
 
@@ -25,7 +25,7 @@ ecr_push: ecr_login ecr_tag
 	$(DOCKER_CMD) push $(ECR_URI)
 
 docker_login:
-	echo $(DOCKER_PW) | $(DOCKER_CMD) login -u $(DOCKER_USER) --password-stdin
+	echo $(DOCKER_PW) | $(DOCKER_CMD) login -u $(DOCKER_USERNAME) --password-stdin
 
 docker_tag:
 	$(DOCKER_CMD) tag $(IMAGE_NAME) $(DOCKER_URI) 
